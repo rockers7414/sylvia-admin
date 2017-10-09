@@ -21,4 +21,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  onDeleteArtist(artist) {
+    console.log(artist);
+  }
+
+  onEditArtist(artist) {
+    console.log(artist);
+  }
+
 }

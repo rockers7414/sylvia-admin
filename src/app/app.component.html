@@ -1,1 +1,6 @@
-<app-artists-list [artists]="artists"></app-artists-list>
+<div class="container">
+  <app-artists-list
+    [artists]="artists"
+     (onDelete)="onDeleteArtist($event)"
+     (onEdit)="onEditArtist($event)"></app-artists-list>
+</div>
