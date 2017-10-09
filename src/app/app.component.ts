@@ -22,11 +22,20 @@ export class AppComponent implements OnInit {
   }
 
   onDeleteArtist(artist) {
-    console.log(artist);
+    this.metadataSvc.deleteArtist(artist).subscribe(result => {
+      if (result) {
+        this.artists = this.artists.filter(a => a !== artist);
+      }
+      // TODO: error handle.
+    });
   }
 
   onEditArtist(artist) {
     console.log(artist);
+  }
+
+  onAddArtist(artist) {
+    this.artists.splice(0, 0, artist);
   }
 
 }

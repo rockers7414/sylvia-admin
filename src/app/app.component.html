@@ -1,4 +1,5 @@
 <div class="container">
+  <app-artist-edit-form (onAdd)="onAddArtist($event)"></app-artist-edit-form>
   <app-artists-list
     [artists]="artists"
      (onDelete)="onDeleteArtist($event)"
