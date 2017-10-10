@@ -1,7 +1,10 @@
 <div class="container">
-  <app-artist-edit-form (onAdd)="onAddArtist($event)"></app-artist-edit-form>
+  <app-artist-edit-form
+    [editArtist]="editArtist"
+    (onEdit)="onEditedArtist($event)"
+    (onAdd)="onAddArtist($event)"></app-artist-edit-form>
   <app-artists-list
     [artists]="artists"
-     (onDelete)="onDeleteArtist($event)"
-     (onEdit)="onEditArtist($event)"></app-artists-list>
+    (onDelete)="onDeleteArtist($event)"
+    (onEdit)="onEditArtist($event)"></app-artists-list>
 </div>

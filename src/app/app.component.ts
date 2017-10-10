@@ -12,6 +12,7 @@ import { Artist } from './objects';
 export class AppComponent implements OnInit {
 
   artists: Artist[];
+  editArtist: Artist;
 
   constructor(private metadataSvc: MetadataService) { }
 
@@ -31,7 +32,12 @@ export class AppComponent implements OnInit {
   }
 
   onEditArtist(artist) {
-    console.log(artist);
+    this.editArtist = artist;
+  }
+
+  onEditedArtist(artist) {
+    const idx = this.artists.findIndex(a => a._id === artist._id);
+    this.artists.splice(idx, 1, artist);
   }
 
   onAddArtist(artist) {
