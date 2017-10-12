@@ -13,7 +13,7 @@ import { ArtistMgrPageComponent } from './artist-mgr-page/artist-mgr-page.compon
 
 import { routing } from './app.routing';
 import { AlbumMgrPageComponent } from './album-mgr-page/album-mgr-page.component';
-import { AlbumEditPageComponent } from './album-edit-page/album-edit-page.component';
+import { AlbumEditFormComponent } from './album-edit-form/album-edit-form.component';
 import { AlbumsListComponent } from './albums-list/albums-list.component';
 
 @NgModule({
@@ -23,7 +23,7 @@ import { AlbumsListComponent } from './albums-list/albums-list.component';
     ArtistEditFormComponent,
     ArtistMgrPageComponent,
     AlbumMgrPageComponent,
-    AlbumEditPageComponent,
+    AlbumEditFormComponent,
     AlbumsListComponent
   ],
   imports: [

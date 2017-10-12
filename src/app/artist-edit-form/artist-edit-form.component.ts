@@ -59,4 +59,8 @@ export class ArtistEditFormComponent implements OnInit, OnChanges {
     this.onCanceled.emit();
   }
 
+  onDeleteAlbum(album) {
+    this.editArtist.albums = this.editArtist.albums.filter(a => a !== album);
+  }
+
 }

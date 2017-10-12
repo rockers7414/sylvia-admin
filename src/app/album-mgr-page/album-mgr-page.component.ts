@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlbumMgrPageComponent implements OnInit {
 
+  isCollapsed = true;
+
   constructor() { }
 
   ngOnInit() {
