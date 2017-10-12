@@ -13,8 +13,9 @@ import { Artist } from '../objects';
 export class ArtistEditFormComponent implements OnInit, OnChanges {
 
   @Input() editArtist: Artist;
-  @Output() onAdd: EventEmitter<Artist> = new EventEmitter();
-  @Output() onEdit: EventEmitter<Artist> = new EventEmitter();
+  @Output() onAdded: EventEmitter<Artist> = new EventEmitter();
+  @Output() onEdited: EventEmitter<Artist> = new EventEmitter();
+  @Output() onCanceled: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
 
@@ -36,7 +37,7 @@ export class ArtistEditFormComponent implements OnInit, OnChanges {
     const artist = new Artist();
     artist.name = this.form.get('name').value;
     this.metadataSvc.addArtist(artist).subscribe(result => {
-      this.onAdd.emit(result);
+      this.onAdded.emit(result);
       this.form.reset();
     });
   }
@@ -46,7 +47,7 @@ export class ArtistEditFormComponent implements OnInit, OnChanges {
     artist._id = this.editArtist._id;
     artist.name = this.form.get('name').value;
     this.metadataSvc.updateArtist(artist).subscribe(result => {
-      this.onEdit.emit(result);
+      this.onEdited.emit(result);
       this.editArtist = null;
       this.form.reset();
     });
@@ -55,6 +56,11 @@ export class ArtistEditFormComponent implements OnInit, OnChanges {
   onCancel() {
     this.editArtist = null;
     this.form.reset();
+    this.onCanceled.emit();
+  }
+
+  onDeleteAlbum(album) {
+    this.editArtist.albums = this.editArtist.albums.filter(a => a !== album);
   }
 
 }

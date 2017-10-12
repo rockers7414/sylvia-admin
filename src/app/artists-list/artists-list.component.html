@@ -3,6 +3,7 @@
     <tr>
       <th>_id</th>
       <th>name</th>
+      <th>#albums</th>
       <th></th>
       <th></th>
     </tr>
@@ -11,9 +12,10 @@
     <tr *ngFor="let artist of artists">
       <td>{{ artist._id }}</td>
       <td>{{ artist.name }}</td>
+      <td>{{ artist.albums.length }}</td>
       <td><button class="btn btn-sm btn-secondary" (click)="onEditArtist(artist)">Edit</button></td>
       <td><button class="btn btn-sm btn-danger" (click)="onDeleteArtist(artist)">Delete</button></td>
     </tr>
   </tbody>
 </table>
-<pre>{{ artists | json }}</pre>
+<!--<pre>{{ artists | json }}</pre>-->

@@ -1,10 +1,22 @@
+<nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Sylvia-Admin</a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="artist" routerLinkActive="active">Artist</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="album">Album</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Tracks</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div class="container">
-  <app-artist-edit-form
-    [editArtist]="editArtist"
-    (onEdit)="onEditedArtist($event)"
-    (onAdd)="onAddArtist($event)"></app-artist-edit-form>
-  <app-artists-list
-    [artists]="artists"
-    (onDelete)="onDeleteArtist($event)"
-    (onEdit)="onEditArtist($event)"></app-artists-list>
+  <router-outlet></router-outlet>
 </div>
