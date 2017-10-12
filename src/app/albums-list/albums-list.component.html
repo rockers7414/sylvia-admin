@@ -1,0 +1,14 @@
+<table class="table table-sm table-bordered">
+  <thead>
+    <tr>
+      <th>_id</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let album of albums">
+      <td>{{ album._id }}</td>
+      <td>{{ album.name }}</td>
+    </tr>
+  </tbody>
+</table>

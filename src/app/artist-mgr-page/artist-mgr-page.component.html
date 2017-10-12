@@ -1,0 +1,22 @@
+<p class="clearfix my-2">
+  <span class="float-left h3 my-1">Artist</span>
+  <button type="button"
+          class="btn btn-outline-primary float-right"
+          (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample">Add Artist</button>
+</p>
+<div id="collapseExample" class="mb-2" [ngbCollapse]="isCollapsed">
+  <div class="card">
+    <div class="card-block">
+      <app-artist-edit-form [editArtist]="editArtist"
+        (onEdited)="onEditedArtist($event)"
+        (onCanceled)="onCanceledEditArtist()"
+        (onAdded)="onAddedArtist($event)"></app-artist-edit-form>
+    </div>
+  </div>
+</div>
+<app-artists-list
+  [artists]="artists"
+  (onDelete)="onDeleteArtist($event)"
+  (onEdit)="onEditArtist($event)"></app-artists-list>
