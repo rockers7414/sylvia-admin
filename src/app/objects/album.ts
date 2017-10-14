@@ -1,4 +1,4 @@
-import { Artist } from './artist';
+import { Artist } from './index';
 
 export class Album {
   _id: string;
