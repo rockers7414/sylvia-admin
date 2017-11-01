@@ -35,7 +35,7 @@ export class ArtistEditFormComponent implements OnInit, OnChanges {
 
   onSubmit() {
     const artist = new Artist();
-    artist.name = this.form.get('name').value;
+    artist.name = this.form.value.name;
     this.metadataSvc.addArtist(artist).subscribe(result => {
       this.onAdded.emit(result);
       this.form.reset();
@@ -45,7 +45,7 @@ export class ArtistEditFormComponent implements OnInit, OnChanges {
   onSave() {
     const artist = new Artist();
     artist._id = this.editArtist._id;
-    artist.name = this.form.get('name').value;
+    artist.name = this.form.value.name;
     this.metadataSvc.updateArtist(artist).subscribe(result => {
       this.onEdited.emit(result);
       this.editArtist = null;

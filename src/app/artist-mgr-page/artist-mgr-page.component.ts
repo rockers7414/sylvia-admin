@@ -29,7 +29,6 @@ export class ArtistMgrPageComponent implements OnInit {
       if (result) {
         this.artists = this.artists.filter(a => a !== artist);
       }
-      // TODO: error handle.
     });
   }
 

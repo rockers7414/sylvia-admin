@@ -39,15 +39,22 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
 
   onSubmit() {
     const album = new Album();
-    album.name = this.form.get('name').value;
-
+    album.name = this.form.value.name;
+    this.metadataSvc.addAlbum(album).subscribe(result => {
+      this.onAdded.emit(result);
+      this.form.reset();
+    });
   }
 
   onSave() {
     const album = new Album();
     album._id = this.editAlbum._id;
-    album.name = this.form.get('name').value;
-
+    album.name = this.form.value.name;
+    this.metadataSvc.updateAlbum(album).subscribe(result => {
+      this.onEdited.emit(result);
+      this.editAlbum = null;
+      this.form.reset();
+    });
   }
 
   onCancel() {
