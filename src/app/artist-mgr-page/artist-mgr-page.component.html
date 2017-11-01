@@ -10,13 +10,12 @@
   <div class="card">
     <div class="card-block">
       <app-artist-edit-form [editArtist]="editArtist"
-        (onEdited)="onEditedArtist($event)"
-        (onCanceled)="onCanceledEditArtist()"
-        (onAdded)="onAddedArtist($event)"></app-artist-edit-form>
+                            (onEdited)="onEditedArtist($event)"
+                            (onCanceled)="onCanceledEditArtist()"
+                            (onAdded)="onAddedArtist($event)"></app-artist-edit-form>
     </div>
   </div>
 </div>
-<app-artists-list
-  [artists]="artists"
-  (onDelete)="onDeleteArtist($event)"
-  (onEdit)="onEditArtist($event)"></app-artists-list>
+<app-artists-list [artists]="artists"
+                  (onDelete)="onDeleteArtist($event)"
+                  (onEdit)="onEditArtist($event)"></app-artists-list>

@@ -4,6 +4,7 @@
       <th>_id</th>
       <th>name</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -11,7 +12,18 @@
       <td>{{ album._id }}</td>
       <td>{{ album.name }}</td>
       <td>
-        <button type="button" class="btn btn-sm btn-danger">Delete</button>
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="onEditAlbum(album)">
+          Edit
+        </button>
+      </td>
+      <td>
+        <button type="button"
+                class="btn btn-sm btn-danger"
+                (click)="onDeleteAlbum(album)">
+          Delete
+        </button>
       </td>
     </tr>
   </tbody>

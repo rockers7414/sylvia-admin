@@ -9,8 +9,13 @@
 <div id="collapseExample" class="mb-2" [ngbCollapse]="isCollapsed">
   <div class="card">
     <div class="card-block">
-      <app-album-edit-form></app-album-edit-form>
+      <app-album-edit-form [editAlbum]="editAlbum"
+                           (onEdited)="onEditedAlbum($event)"
+                           (onCanceled)="onCanceledEditAlbum()"
+                           (onAdded)="onAddedAlbum($event)"></app-album-edit-form>
     </div>
   </div>
 </div>
-<app-albums-list></app-albums-list>
+<app-albums-list [albums]="albums"
+                 (onDelete)="onDeleteAlbum($event)"
+                 (onEdit)="onEditAlbum($event)"></app-albums-list>

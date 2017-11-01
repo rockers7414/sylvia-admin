@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Album } from '../objects';
 
@@ -10,10 +10,20 @@ import { Album } from '../objects';
 export class AlbumsListComponent implements OnInit {
 
   @Input() albums: Album[];
+  @Output() onEdit: EventEmitter<Album> = new EventEmitter();
+  @Output() onDelete: EventEmitter<Album> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onEditAlbum(album) {
+    this.onEdit.emit(album);
+  }
+
+  onDeleteAlbum(album) {
+    this.onDelete.emit(album);
   }
 
 }
