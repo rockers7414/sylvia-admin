@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 
 import { environment } from '../../environments/environment';
 
-import { Artist, Album, Page } from '../objects';
+import { Artist, Album, Track, Page } from '../objects';
 
 interface Single {
   data: any;
@@ -70,6 +70,18 @@ export class MetadataService {
 
   updateAlbum(album: Album): Observable<Album> {
     return this.http.put<Single>(environment.apiServer + '/albums/' + album._id, album)
+      .map(result => result.data);
+  }
+
+  // track api
+
+  getTracks(): Observable<Page> {
+    return this.http.get<Collection>(environment.apiServer + '/tracks')
+      .map(result => new Page(result.data, result.index));
+  }
+
+  addTrack(track: Track): Observable<Track> {
+    return this.http.post<Single>(environment.apiServer + '/tracks', track)
       .map(result => result.data);
   }
 

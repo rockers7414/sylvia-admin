@@ -1,0 +1,23 @@
+<form [formGroup]="form">
+  <div class="form-group row">
+    <label class="col-2 col-form-label" for="trackNumber">trackNumber</label>
+    <div class="col-10 mb-2">
+      <input id="trackNumber" class="form-control" type="number" formControlName="trackNumber" />
+    </div>
+    <label class="col-2 col-form-label" for="name">name</label>
+    <div class="col-10 mb-2">
+      <input id="name" class="form-control" type="text" formControlName="name" />
+    </div>
+    <label class="col-2 col-form-label" for="lyric">lyric</label>
+    <div class="col-10 mb-2">
+      <textarea id="lyric" class="form-control" type="text" formControlName="lyric"></textarea>
+    </div>
+  </div>
+
+  <div *ngIf="!editTrack" class="clearfix">
+      <button type="submit"
+       class="btn btn-primary float-right ml-2"
+       [disabled]="!form.valid"
+       (click)="onSubmit()">Submit</button>
+  </div>
+</form>

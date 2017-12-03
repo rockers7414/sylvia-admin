@@ -1,0 +1,46 @@
+<table class="table table-sm table-bordered">
+  <thead>
+    <tr>
+      <th width="5%">No.</th>
+      <th width="15%">_id</th>
+      <th width="20%">name</th>
+      <th width="50%%">lyric</th>
+      <th width="5%"></th>
+      <th width="5%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let track of tracks">
+      <td>{{ track.trackNumber }}</td>
+      <td>{{ track._id }}</td>
+      <td>{{ track.name }}</td>
+      <td>
+        <div class="ellipsis">
+          <a href="javascript:void(0)" (click)="open(content1)">{{ track.lyric }}</a>
+        </div>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-secondary">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-secondary">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- lyric modal -->
+<ng-template #content1 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>
