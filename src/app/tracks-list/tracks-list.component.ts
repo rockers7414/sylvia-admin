@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Track } from '../objects';
+import { TrackLyricModalComponent } from '../track-lyric-modal/track-lyric-modal.component';
 
 @Component({
   selector: 'app-tracks-list',
@@ -18,9 +19,11 @@ export class TracksListComponent implements OnInit {
 
   }
 
-  open(content) {
-    console.log(typeof(content));
-    console.log(content);
-    this.modalService.open(content);
+  open(track) {
+    const modalRef = this.modalService.open(TrackLyricModalComponent);
+    modalRef.componentInstance.trackNumber = track.trackNumber;
+    modalRef.componentInstance.name = track.name;
+    console.log(track.lyric)
+    modalRef.componentInstance.lyric = track.lyric;
   }
 }

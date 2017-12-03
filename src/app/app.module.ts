@@ -18,6 +18,7 @@ import { AlbumsListComponent } from './albums-list/albums-list.component';
 import { TracksListComponent } from './tracks-list/tracks-list.component';
 import { TrackMgrPageComponent } from './track-mgr-page/track-mgr-page.component';
 import { TrackEditFormComponent } from './track-edit-form/track-edit-form.component';
+import { TrackLyricModalComponent } from './track-lyric-modal/track-lyric-modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TrackEditFormComponent } from './track-edit-form/track-edit-form.compon
     AlbumsListComponent,
     TracksListComponent,
     TrackMgrPageComponent,
-    TrackEditFormComponent
+    TrackEditFormComponent,
+    TrackLyricModalComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,9 @@ import { TrackEditFormComponent } from './track-edit-form/track-edit-form.compon
   providers: [
     MetadataService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    TrackLyricModalComponent
+  ]
 })
 export class AppModule { }
