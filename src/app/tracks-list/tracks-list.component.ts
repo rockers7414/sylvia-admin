@@ -21,9 +21,6 @@ export class TracksListComponent implements OnInit {
 
   open(track) {
     const modalRef = this.modalService.open(TrackLyricModalComponent);
-    modalRef.componentInstance.trackNumber = track.trackNumber;
-    modalRef.componentInstance.name = track.name;
-    console.log(track.lyric)
-    modalRef.componentInstance.lyric = track.lyric;
+    modalRef.componentInstance.track = track;
   }
 }
