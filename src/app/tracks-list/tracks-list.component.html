@@ -13,10 +13,12 @@
     <tr *ngFor="let track of tracks">
       <td>{{ track.trackNumber }}</td>
       <td>{{ track._id }}</td>
-      <td>{{ track.name }}</td>
+      <td>
+        <a href="{{track.link}}">{{ track.name }}</a>
+      </td>
       <td>
         <div class="ellipsis">
-          <a href="javascript:void(0)" (click)="open(track)">{{ track.lyric }}</a>
+          <a href="javascript:void(0)" tabIndex="-1" (click)="open(track)">{{ track.lyric }}</a>
         </div>
       </td>
       <td>
@@ -26,7 +28,7 @@
               Edit</button>
       </td>
       <td>
-        <button type="button" class="btn btn-sm btn-secondary">Delete</button>
+        <button type="button" class="btn btn-sm btn-danger">Delete</button>
       </td>
     </tr>
   </tbody>

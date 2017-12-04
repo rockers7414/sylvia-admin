@@ -28,6 +28,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     this.form = new FormGroup({
       trackNumber: new FormControl(this.editTrack ? this.editTrack.trackNumber : '', [Validators.required, Validators.min(1)]),
       name: new FormControl(this.editTrack ? this.editTrack.name : '', [Validators.required]),
+      link: new FormControl(this.editTrack ? this.editTrack.link : ''),
       lyric: new FormControl(this.editTrack ? this.editTrack.lyric : '')
     });
   }
@@ -36,6 +37,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     const track = new Track();
     track.trackNumber = this.form.value.trackNumber;
     track.name = this.form.value.name;
+    track.link = this.form.value.link;
     track.lyric = this.form.value.lyric;
     this.metadataSvc.addTrack(track).subscribe(result => {
       this.onAdded.emit(result);
@@ -48,6 +50,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     track._id = this.editTrack._id;
     track.trackNumber = this.form.value.trackNumber;
     track.name = this.form.value.name;
+    track.link = this.form.value.link;
     track.lyric = this.form.value.lyric;
     this.metadataSvc.updateTrack(track).subscribe(result => {
       this.onEditedTrack.emit(track);
