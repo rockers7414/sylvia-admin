@@ -85,6 +85,11 @@ export class MetadataService {
       .map(result => result.data);
   }
 
+  updateTrack(track: Track): Observable<Track> {
+    return this.http.put<Single>(environment.apiServer + '/tracks/' + track._id, track)
+      .map(result => result.data);
+  }
+
   private errorHandler(err) {
   }
 

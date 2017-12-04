@@ -9,8 +9,13 @@
 <div id="collapseTrack" class="mb-2" [ngbCollapse]="!isCollapsed">
   <div class="card">
     <div class="card-block">
-      <app-track-edit-form (onAdded)="onAddedTrack($event)"></app-track-edit-form>
+      <app-track-edit-form (onAdded)="onAddedTrack($event)"
+                           (onCanceled)="onCanceled()"
+                           (onEditedTrack)="onEditedTrack($event)"
+                           [editTrack]="editTrack">
+                           </app-track-edit-form>
     </div>
   </div>
 </div>
-<app-tracks-list [tracks]="tracks"></app-tracks-list>
+<app-tracks-list [tracks]="tracks"
+                 (onEdit)="onEditTrack($event)"></app-tracks-list>
