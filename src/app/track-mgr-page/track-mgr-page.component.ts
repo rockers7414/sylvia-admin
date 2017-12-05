@@ -42,4 +42,9 @@ export class TrackMgrPageComponent implements OnInit {
     this.editTrack = null;
   }
 
+  onDeleted(track) {
+    const idx = this.tracks.findIndex(a => a._id === track._id);
+    this.tracks.splice(idx, 1);
+  }
+
 }

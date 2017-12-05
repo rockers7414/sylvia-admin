@@ -90,6 +90,11 @@ export class MetadataService {
       .map(result => result.data);
   }
 
+  deleteTrack(track: Track): Observable<Track> {
+    return this.http.delete<Single>(environment.apiServer + '/tracks/' + track._id)
+      .map(result => result.data);
+  }
+
   private errorHandler(err) {
   }
 

@@ -18,4 +18,5 @@
   </div>
 </div>
 <app-tracks-list [tracks]="tracks"
-                 (onEdit)="onEditTrack($event)"></app-tracks-list>
+                 (onEdit)="onEditTrack($event)"
+                 (onDeleted)="onDeleted($event)"></app-tracks-list>
