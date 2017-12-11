@@ -4,4 +4,5 @@ export class Track {
     name: string;
     link: string;
     lyric: string;
+    album: string;
 }

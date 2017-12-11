@@ -95,6 +95,11 @@ export class MetadataService {
       .map(result => result.data);
   }
 
+  getTrackByKeyword(keyword: string): Observable<Track> {
+    return this.http.get<Single>(environment.apiServer + '/tracks/keyword/' + keyword)
+      .map(result => result.data);
+  }
+
   private errorHandler(err) {
   }
 

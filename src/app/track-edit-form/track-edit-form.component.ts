@@ -1,9 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subject }    from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import {
+   debounceTime, distinctUntilChanged, switchMap
+ } from 'rxjs/operators';
 
 import { MetadataService } from '../services/metadata.service';
 
-import { Track } from '../objects';
+import { Track, Album } from '../objects';
 
 @Component({
   selector: 'app-track-edit-form',
@@ -18,10 +23,17 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   @Output() onEditedTrack: EventEmitter<Track> = new EventEmitter();
 
   private form: FormGroup;
+  private searchAlbums$: Observable<Track>;
+  private searchTerms = new Subject<string>();
 
   constructor(private metadataSvc: MetadataService) { }
 
   ngOnInit() {
+    this.searchAlbums$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.metadataSvc.getTrackByKeyword(term))
+    );
   }
 
   ngOnChanges() {
@@ -29,7 +41,11 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
       trackNumber: new FormControl(this.editTrack ? this.editTrack.trackNumber : '', [Validators.required, Validators.min(1)]),
       name: new FormControl(this.editTrack ? this.editTrack.name : '', [Validators.required]),
       link: new FormControl(this.editTrack ? this.editTrack.link : ''),
-      lyric: new FormControl(this.editTrack ? this.editTrack.lyric : '')
+      lyric: new FormControl(this.editTrack ? this.editTrack.lyric : ''),
+      album: new FormControl({
+          value: this.editTrack ? this.editTrack.album : '',
+          disabled: true
+      })
     });
   }
 
@@ -63,6 +79,12 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     this.editTrack = null;
     this.form.reset();
     this.onCanceled.emit();
+  }
+
+  onSearch(keyword) {
+    if(keyword.target.value != ''){
+      this.searchTerms.next(keyword.target.value);
+    }
   }
 
 }
