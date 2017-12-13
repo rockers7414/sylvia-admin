@@ -20,21 +20,20 @@
     <div class="col-5 mb-2">
       <input id="album" class="form-control" type="text" formControlName="album" />
     </div>
-
-    <label class="col-1 col-form-label">Search</label>
-    <div class="col-3 mb-2">
-      <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..." (keyup)="onSearch($event)" />
-      <ul>
-        <li *ngFor="let album of searchAlbums$ | async">
-          {{ album.name }}
-        </li>
-      </ul>
+    <div class="col-5 row">
+      <label class="col-2 col-form-label">Search</label>
+      <div class="col-8 mb-2">
+        <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..." (keyup)="onSearch($event)" />
+        <ul *ngIf="liveSearchResult?.length > 0">
+          <li *ngFor="let album of liveSearchResult">
+            {{ album.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <button type="button" class="btn btn-warning">Add</button>
+      </div>
     </div>
-    <div class="col-1">
-      <button type="button"
-        class="btn btn-warning">Add</button>
-    </div>
-
   </div>
   <div *ngIf="!editTrack" class="clearfix">
     <button type="submit" class="btn btn-primary float-right ml-2" [disabled]="!form.valid" (click)="onSubmit()">Submit</button>

@@ -73,6 +73,11 @@ export class MetadataService {
       .map(result => result.data);
   }
 
+  getAlbumByKeyword(keyword: string): Observable<Album[]> {
+    return this.http.get<Single>(environment.apiServer + '/albums/keyword/' + keyword)
+      .map(result => result.data);
+  }
+
   // track api
 
   getTracks(): Observable<Page> {

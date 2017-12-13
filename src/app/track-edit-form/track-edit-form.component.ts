@@ -23,8 +23,9 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   @Output() onEditedTrack: EventEmitter<Track> = new EventEmitter();
 
   private form: FormGroup;
-  private searchAlbums$: Observable<Track>;
+  private searchAlbums$: Observable<Album[]>;
   private searchTerms = new Subject<string>();
+  private liveSearchResult: Album[];
 
   constructor(private metadataSvc: MetadataService) { }
 
@@ -32,8 +33,11 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     this.searchAlbums$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((term: string) => this.metadataSvc.getTrackByKeyword(term))
+      switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term))
     );
+    this.searchAlbums$.subscribe(result => {
+      this.liveSearchResult = result;
+    });
   }
 
   ngOnChanges() {
@@ -82,7 +86,9 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   }
 
   onSearch(keyword) {
-    if(keyword.target.value != ''){
+    if(keyword.target.value == '') {
+      this.liveSearchResult = [];
+    } else {
       this.searchTerms.next(keyword.target.value);
     }
   }
