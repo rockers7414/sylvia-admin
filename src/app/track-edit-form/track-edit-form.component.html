@@ -23,12 +23,18 @@
     <div class="col-5 row">
       <label class="col-2 col-form-label">Search</label>
       <div class="col-8 mb-2">
-        <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..." (keyup)="onSearch($event)" />
-        <ul *ngIf="liveSearchResult?.length > 0">
-          <li *ngFor="let album of liveSearchResult">
-            {{ album.name }}
-          </li>
-        </ul>
+        <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..."
+           (keyup)="onSearch($event)"
+           (blur)="onBlur()"
+           (focus)="onFocus()" />
+        <div class="list-group liveSearchResult row px-3" *ngIf="liveSearchResult?.length > 0 && liveSearchResultShow">
+          <a *ngFor="let album of liveSearchResult" href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <div>{{ album.name }}</div>
+            </div>
+            <small *ngIf="album.artist">{{ album.artist.name }}</small>
+          </a>
+        </div>
       </div>
       <div class="col-2">
         <button type="button" class="btn btn-warning">Add</button>

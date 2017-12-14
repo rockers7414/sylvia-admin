@@ -26,6 +26,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   private searchAlbums$: Observable<Album[]>;
   private searchTerms = new Subject<string>();
   private liveSearchResult: Album[];
+  private liveSearchResultShow = false;
 
   constructor(private metadataSvc: MetadataService) { }
 
@@ -35,8 +36,12 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
       distinctUntilChanged(),
       switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term))
     );
+
     this.searchAlbums$.subscribe(result => {
       this.liveSearchResult = result;
+      if(this.liveSearchResult.length > 0) {
+        this.liveSearchResultShow = true;
+      }
     });
   }
 
@@ -85,12 +90,20 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     this.onCanceled.emit();
   }
 
+  onBlur() {
+    this.liveSearchResultShow = false;
+  }
+
+  onFocus() {
+    this.liveSearchResultShow = true;
+  }
+
   onSearch(keyword) {
-    if(keyword.target.value == '') {
-      this.liveSearchResult = [];
-    } else {
-      this.searchTerms.next(keyword.target.value);
+    var _keyword = null;
+    if(keyword.target.value != '') {
+      _keyword = keyword.target.value;
     }
+    this.searchTerms.next(_keyword);
   }
 
 }
