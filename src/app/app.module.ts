@@ -19,6 +19,7 @@ import { TracksListComponent } from './tracks-list/tracks-list.component';
 import { TrackMgrPageComponent } from './track-mgr-page/track-mgr-page.component';
 import { TrackEditFormComponent } from './track-edit-form/track-edit-form.component';
 import { TrackLyricModalComponent } from './track-lyric-modal/track-lyric-modal.component';
+import { LiveSearchComponent } from './live-search/live-search.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TrackLyricModalComponent } from './track-lyric-modal/track-lyric-modal.
     TracksListComponent,
     TrackMgrPageComponent,
     TrackEditFormComponent,
-    TrackLyricModalComponent
+    TrackLyricModalComponent,
+    LiveSearchComponent
   ],
   imports: [
     BrowserModule,

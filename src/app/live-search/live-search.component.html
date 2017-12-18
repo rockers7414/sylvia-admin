@@ -1,0 +1,15 @@
+<label class="col-2 col-form-label">Search</label>
+<div class="col-8 mb-2">
+  <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..." (keyup)="onSearch($event)" (blur)="onBlur($event)" (focus)="onFocus()" />
+  <div class="list-group liveSearchResult row px-3" *ngIf="templates?.length > 0 && showResultList">
+    <a *ngFor="let template of templates" href="#" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <div>{{ template.title }}</div>
+      </div>
+      <small *ngIf="template.desc">{{ template.desc }}</small>
+    </a>
+  </div>
+</div>
+<div class="col-2">
+  <button type="button" class="btn btn-warning">Add</button>
+</div>

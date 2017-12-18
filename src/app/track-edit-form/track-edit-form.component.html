@@ -21,8 +21,7 @@
       <input id="album" class="form-control" type="text" formControlName="album" />
     </div>
 
-    <div class="col-5 row">
-      <label class="col-2 col-form-label">Search</label>
+      <!-- <label class="col-2 col-form-label">Search</label>
       <div class="col-8 mb-2">
         <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..."
            (keyup)="onSearch($event)"
@@ -39,8 +38,11 @@
       </div>
       <div class="col-2">
         <button type="button" class="btn btn-warning">Add</button>
-      </div>
-    </div>
+      </div> -->
+      <app-live-search class="col-5 row"
+        (onSearchEmitter)="onSearch($event)"
+        [composeTemplate]="composeTemplate"
+        [searchResultObserver]="searchAlbums$"></app-live-search>
 
   </div>
   <div *ngIf="!editTrack" class="clearfix">

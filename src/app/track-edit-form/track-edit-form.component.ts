@@ -8,7 +8,7 @@ import {
 
 import { MetadataService } from '../services/metadata.service';
 
-import { Track, Album } from '../objects';
+import { Track, Album, LiveSearchTemplate } from '../objects';
 
 @Component({
   selector: 'app-track-edit-form',
@@ -23,14 +23,20 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   @Output() onEditedTrack: EventEmitter<Track> = new EventEmitter();
 
   private form: FormGroup;
+
+  /** live search */
   private searchAlbums$: Observable<Album[]>;
   private searchTerms = new Subject<string>();
+  private composeTemplate: Function;
+
   private liveSearchResult: Album[];
   private liveSearchResultShow = false;
 
   constructor(private metadataSvc: MetadataService) { }
 
   ngOnInit() {
+    this.composeTemplate = this.templateCallback.bind(this);
+
     this.searchAlbums$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -99,11 +105,19 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   }
 
   onSearch(keyword) {
-    var _keyword = null;
-    if(keyword.target.value != '') {
-      _keyword = keyword.target.value;
-    }
+    var _keyword = (keyword == null || keyword == '') ? null : keyword;
     this.searchTerms.next(_keyword);
   }
 
+  templateCallback(object: any) {
+    var templateArray = [];
+    object.forEach(obj => {
+      var template = new LiveSearchTemplate();
+      template._id = obj._id;
+      template.title = obj.name;
+      template.desc = obj.artist ? obj.artist.name : '';
+      templateArray.push(template);
+    });
+    return templateArray;
+  }
 }
