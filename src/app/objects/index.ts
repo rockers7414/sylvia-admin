@@ -1,4 +1,4 @@
 export * from './artist';
-export * from './albums';
-export * from './tracks';
+export * from './album';
+export * from './track';
 export * from './page';
