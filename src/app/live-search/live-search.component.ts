@@ -11,7 +11,7 @@ export class LiveSearchComponent implements OnInit {
 
   @Output() onSearchEmitter: EventEmitter<string> = new EventEmitter();
   @Input() composeTemplate: Function;
-  @Input() searchResultObserver: Observable<any[]>;
+  @Input() searchResultObserver$: Observable<any[]>;
 
   private templates: LiveSearchTemplate[];
   private showResultList = false;
@@ -19,9 +19,8 @@ export class LiveSearchComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.searchResultObserver.subscribe(result => {
+    this.searchResultObserver$.subscribe(result => {
       this.templates = this.composeTemplate(result);
-      console.log(this.templates);
       this.showResultList = true;
     });
   }
@@ -32,6 +31,8 @@ export class LiveSearchComponent implements OnInit {
 
   onBlur(event) {
     console.log('blur');
+    console.log(event);
+    console.log(event.relatedTarget.classList.contains('searchResultItem')); //TODO
   }
 
   onFocus() {

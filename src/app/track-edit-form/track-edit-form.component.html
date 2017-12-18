@@ -42,7 +42,7 @@
       <app-live-search class="col-5 row"
         (onSearchEmitter)="onSearch($event)"
         [composeTemplate]="composeTemplate"
-        [searchResultObserver]="searchAlbums$"></app-live-search>
+        [searchResultObserver$]="searchAlbums$"></app-live-search>
 
   </div>
   <div *ngIf="!editTrack" class="clearfix">
