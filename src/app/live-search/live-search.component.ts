@@ -10,6 +10,7 @@ import { LiveSearchTemplate } from '../objects';
 export class LiveSearchComponent implements OnInit {
 
   @Output() onSearchEmitter: EventEmitter<string> = new EventEmitter();
+  @Output() onItemClick: EventEmitter<any> = new EventEmitter();
   @Input() composeTemplate: Function;
   @Input() searchResultObserver$: Observable<any[]>;
 
@@ -30,13 +31,18 @@ export class LiveSearchComponent implements OnInit {
   }
 
   onBlur(event) {
-    console.log('blur');
-    console.log(event);
-    console.log(event.relatedTarget.classList.contains('searchResultItem')); //TODO
+    if(!event.relatedTarget || (event.relatedTarget && !event.relatedTarget.classList.contains('searchResultItem'))) {
+      this.showResultList = false;
+    }
   }
 
   onFocus() {
-    console.log('focus');
+    this.showResultList = true;
+  }
+
+  onClick(template) {
+    this.onItemClick.emit(template);
+    this.showResultList = false;
   }
 
 }

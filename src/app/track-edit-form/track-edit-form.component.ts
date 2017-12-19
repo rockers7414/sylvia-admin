@@ -29,8 +29,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   private searchTerms = new Subject<string>();
   private composeTemplate: Function;
 
-  private liveSearchResult: Album[];
-  private liveSearchResultShow = false;
+  private relateAlbum: Album;
 
   constructor(private metadataSvc: MetadataService) { }
 
@@ -42,13 +41,6 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
       distinctUntilChanged(),
       switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term))
     );
-
-    this.searchAlbums$.subscribe(result => {
-      this.liveSearchResult = result;
-      if(this.liveSearchResult.length > 0) {
-        this.liveSearchResultShow = true;
-      }
-    });
   }
 
   ngOnChanges() {
@@ -58,7 +50,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
       link: new FormControl(this.editTrack ? this.editTrack.link : ''),
       lyric: new FormControl(this.editTrack ? this.editTrack.lyric : ''),
       album: new FormControl({
-          value: this.editTrack ? this.editTrack.album : '',
+          value: this.editTrack ? this.editTrack.album.name : '',
           disabled: true
       })
     });
@@ -96,24 +88,22 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     this.onCanceled.emit();
   }
 
-  onBlur() {
-    this.liveSearchResultShow = false;
-  }
-
-  onFocus() {
-    this.liveSearchResultShow = true;
-  }
-
   onSearch(keyword) {
     var _keyword = (keyword == null || keyword == '') ? null : keyword;
     this.searchTerms.next(_keyword);
+  }
+
+  onRelateAlbum(album) {
+    this.relateAlbum = album;
+    var inputValue = album.title + (album.desc == '' ? '' : ' - ' + album.desc);
+    this.form.controls['album'].setValue(inputValue);
   }
 
   templateCallback(object: any) {
     var templateArray = [];
     object.forEach(obj => {
       var template = new LiveSearchTemplate();
-      template._id = obj._id;
+      template.obj = obj;
       template.title = obj.name;
       template.desc = obj.artist ? obj.artist.name : '';
       templateArray.push(template);

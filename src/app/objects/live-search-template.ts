@@ -1,5 +1,5 @@
 export class LiveSearchTemplate {
-    _id: string;
+    obj: any;
     title: string;
     desc: string;
 }
