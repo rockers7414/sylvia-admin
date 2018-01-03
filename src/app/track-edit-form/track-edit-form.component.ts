@@ -30,6 +30,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   private composeTemplate: Function;
 
   private relateAlbum: Album;
+  private originalAlbum: Album;
 
   constructor(private metadataSvc: MetadataService) { }
 
@@ -50,10 +51,15 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
       link: new FormControl(this.editTrack ? this.editTrack.link : ''),
       lyric: new FormControl(this.editTrack ? this.editTrack.lyric : ''),
       album: new FormControl({
-          value: this.editTrack ? this.editTrack.album.name : '',
+          value: this.editTrack ? (this.editTrack.album ? this.editTrack.album.name : '') : '',
           disabled: true
       })
     });
+
+    if(this.editTrack) {
+      this.relateAlbum = this.editTrack.album;
+      this.originalAlbum = this.editTrack.album;
+    }
   }
 
   onSubmit() {
@@ -62,10 +68,19 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     track.name = this.form.value.name;
     track.link = this.form.value.link;
     track.lyric = this.form.value.lyric;
+
     this.metadataSvc.addTrack(track).subscribe(result => {
       this.onAdded.emit(result);
+
+      /** Set album relationship */
+      if(this.relateAlbum) {
+        this.metadataSvc.addTrackToAlbum(this.relateAlbum._id, { 'tracks': [track._id] }).subscribe();
+      }
+
       this.form.reset();
     });
+
+
   }
 
   onSave() {
@@ -77,6 +92,19 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     track.lyric = this.form.value.lyric;
     this.metadataSvc.updateTrack(track).subscribe(result => {
       this.onEditedTrack.emit(track);
+
+      (async () => {
+        if(this.originalAlbum) {
+          await this.metadataSvc.removeTrackFromAlbum(this.originalAlbum._id, track._id).toPromise();
+        }
+
+        if(this.relateAlbum) {
+          await this.metadataSvc.addTrackToAlbum(this.relateAlbum._id, { 'tracks': [track._id] }).toPromise().then(() => {
+            track.album = this.relateAlbum;
+          });
+        }
+      })();
+
       this.editTrack = null;
       this.form.reset();
     });
@@ -93,10 +121,15 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
     this.searchTerms.next(_keyword);
   }
 
-  onRelateAlbum(album) {
-    this.relateAlbum = album;
-    var inputValue = album.title + (album.desc == '' ? '' : ' - ' + album.desc);
+  onRelateAlbum(templ: LiveSearchTemplate) {
+    this.relateAlbum = <Album>templ.obj;
+    var inputValue = templ.title + (templ.desc == '' ? '' : ' - ' + templ.desc);
     this.form.controls['album'].setValue(inputValue);
+  }
+
+  onRemoveRelateAlbum() {
+    this.relateAlbum = null;
+    this.form.controls['album'].setValue('');
   }
 
   templateCallback(object: any) {

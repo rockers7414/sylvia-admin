@@ -78,6 +78,16 @@ export class MetadataService {
       .map(result => result.data);
   }
 
+  addTrackToAlbum(albumId: string, tracks: any): Observable<Album> {
+    return this.http.post<Single>(environment.apiServer + '/albums/' + albumId + '/tracks', tracks)
+      .map(result => result.data);
+  }
+
+  removeTrackFromAlbum(albumId: string, trackId: string): Observable<Album> {
+    return this.http.delete<Single>(environment.apiServer + '/albums/' + albumId + '/tracks/' + trackId)
+      .map(result => result.data);
+  }
+
   // track api
 
   getTracks(): Observable<Page> {
