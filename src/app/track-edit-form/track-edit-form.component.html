@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+  <div class="form-group row">
+    <label class="col-2 col-form-label" for="trackNumber">trackNumber</label>
+    <div class="col-10 mb-2">
+      <input id="trackNumber" class="form-control" type="number" formControlName="trackNumber" />
+    </div>
+    <label class="col-2 col-form-label" for="name">name</label>
+    <div class="col-10 mb-2">
+      <input id="name" class="form-control" type="text" formControlName="name" />
+    </div>
+    <label class="col-2 col-form-label" for="link">link</label>
+    <div class="col-10 mb-2">
+      <input id="link" class="form-control" type="text" formControlName="link" />
+    </div>
+    <label class="col-2 col-form-label" for="lyric">lyric</label>
+    <div class="col-10 mb-2">
+      <textarea id="lyric" class="form-control" formControlName="lyric"></textarea>
+    </div>
+    <label class="col-2 col-form-label" for="album">album</label>
+    <div class="col-5 mb-2">
+      <input id="album" class="form-control" type="text" formControlName="album" />
+    </div>
+    <app-live-search class="col-5" *ngIf="!relateAlbum"
+      (onSearchEmitter)="onSearch($event)"
+      (onItemClick)="onRelateAlbum($event)"
+      [composeTemplate]="composeTemplate"
+      [searchResultObserver$]="searchAlbums$"></app-live-search>
+    <div class="col-5" *ngIf="relateAlbum" (click)="onRemoveRelateAlbum()">
+      <button type="button" class="btn btn-danger">Remove</button>
+    </div>
+  </div>
+  <div *ngIf="!editTrack" class="clearfix">
+    <button type="submit" class="btn btn-primary float-right ml-2" [disabled]="!form.valid" (click)="onSubmit()">Submit</button>
+  </div>
+  <div *ngIf="editTrack" class="clearfix">
+    <button type="button" class="btn btn-secondary float-right ml-2" (click)="onCancel()">Canel</button>
+    <button type="submit" class="btn btn-primary float-right ml-2" [disabled]="!form.valid" (click)="onSave()">Save</button>
+  </div>
+</form>

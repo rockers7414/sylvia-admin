@@ -15,6 +15,11 @@ import { routing } from './app.routing';
 import { AlbumMgrPageComponent } from './album-mgr-page/album-mgr-page.component';
 import { AlbumEditFormComponent } from './album-edit-form/album-edit-form.component';
 import { AlbumsListComponent } from './albums-list/albums-list.component';
+import { TracksListComponent } from './tracks-list/tracks-list.component';
+import { TrackMgrPageComponent } from './track-mgr-page/track-mgr-page.component';
+import { TrackEditFormComponent } from './track-edit-form/track-edit-form.component';
+import { TrackLyricModalComponent } from './track-lyric-modal/track-lyric-modal.component';
+import { LiveSearchComponent } from './live-search/live-search.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,12 @@ import { AlbumsListComponent } from './albums-list/albums-list.component';
     ArtistMgrPageComponent,
     AlbumMgrPageComponent,
     AlbumEditFormComponent,
-    AlbumsListComponent
+    AlbumsListComponent,
+    TracksListComponent,
+    TrackMgrPageComponent,
+    TrackEditFormComponent,
+    TrackLyricModalComponent,
+    LiveSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +46,9 @@ import { AlbumsListComponent } from './albums-list/albums-list.component';
   providers: [
     MetadataService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    TrackLyricModalComponent
+  ]
 })
 export class AppModule { }

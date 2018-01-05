@@ -1,0 +1,22 @@
+<p class="clearfix my-2">
+  <span class="float-left h3 my-1">Track</span>
+  <button type="button"
+  class="btn  btn-outline-primary float-right"
+  (click)="isCollapsed = !isCollapsed"
+  [attr.aria-expanded]="!isCollapsed"
+  aria-controls="collapseTrack">Add Track</button>
+</p>
+<div id="collapseTrack" class="mb-2" [ngbCollapse]="!isCollapsed">
+  <div class="card">
+    <div class="card-block">
+      <app-track-edit-form (onAdded)="onAddedTrack($event)"
+                           (onCanceled)="onCanceled()"
+                           (onEditedTrack)="onEditedTrack($event)"
+                           [editTrack]="editTrack">
+                           </app-track-edit-form>
+    </div>
+  </div>
+</div>
+<app-tracks-list [tracks]="tracks"
+                 (onEdit)="onEditTrack($event)"
+                 (onDeleted)="onDeleted($event)"></app-tracks-list>
