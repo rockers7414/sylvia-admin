@@ -112,6 +112,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
 
   onCancel() {
     this.editTrack = null;
+    this.relateAlbum = null;
     this.form.reset();
     this.onCanceled.emit();
   }

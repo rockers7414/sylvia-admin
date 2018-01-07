@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MetadataService } from '../services/metadata.service';
 
-import { Album } from '../objects';
+import { Album, Track, Artist } from '../objects';
 
 @Component({
   selector: 'app-album-edit-form',
@@ -18,23 +18,32 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
   @Output() onEdited: EventEmitter<Album> = new EventEmitter();
   @Output() onCanceled: EventEmitter<null> = new EventEmitter();
 
-  form: FormGroup;
+  private form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private metadataSvc: MetadataService
-  ) { }
+  private relateArtist: Artist;
+  private relateTracks: Track[];
+
+  constructor(private metadataSvc: MetadataService) { }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      name: [this.editAlbum ? this.editAlbum.name : '', [Validators.required]]
-    });
+    // this.form = this.fb.group({
+    //   name: [this.editAlbum ? this.editAlbum.name : '', [Validators.required]]
+    // });
   }
 
   ngOnChanges() {
-    this.form = this.fb.group({
-      name: [this.editAlbum ? this.editAlbum.name : '', [Validators.required]]
+    this.form = new FormGroup({
+      name: new FormControl(this.editAlbum ? this.editAlbum.name : '', [Validators.required]),
+      artist: new FormControl({
+        value: this.editAlbum ? (this.editAlbum.artist ? this.editAlbum.artist.name : '') : '',
+        disabled: true
+      })
     });
+      // TODO => images, tracks.
+
+    if(this.editAlbum) {
+      this.relateArtist = this.editAlbum.artist;
+    }
   }
 
   onSubmit() {
