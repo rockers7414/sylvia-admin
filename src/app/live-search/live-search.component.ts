@@ -13,11 +13,13 @@ export class LiveSearchComponent implements OnInit {
   @Output() onItemClick: EventEmitter<any> = new EventEmitter();
   @Input() composeTemplate: Function;
   @Input() searchResultObserver$: Observable<any[]>;
+  @Input() placeholder: string;
 
   private templates: LiveSearchTemplate[];
   private showResultList = false;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.searchResultObserver$.subscribe(result => {

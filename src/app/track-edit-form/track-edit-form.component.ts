@@ -28,6 +28,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   private searchAlbums$: Observable<Album[]>;
   private searchTerms = new Subject<string>();
   private composeTemplate: Function;
+  private liveSearchPlaceholder = "Search tracks...";
 
   private relateAlbum: Album;
   private originalAlbum: Album;

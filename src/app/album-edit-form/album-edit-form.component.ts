@@ -1,10 +1,14 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
-
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MetadataService } from '../services/metadata.service';
-
 import { Album, Track, Artist } from '../objects';
+
+import { Subject }    from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import {
+   debounceTime, distinctUntilChanged, switchMap
+ } from 'rxjs/operators';
 
 @Component({
   selector: 'app-album-edit-form',
@@ -20,15 +24,26 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
 
   private form: FormGroup;
 
+  private searchArtist$: Observable<Artist[]>;
+  private searchArtistTerm = new Subject<string>();
+  private composeArtistTemplate: Function;
+
   private relateArtist: Artist;
+  private liveSearchArtistPlaceholder = "Search artist...";
   private relateTracks: Track[];
+  private liveSearchTracksPlaceholder = "Search tracks...";
 
   constructor(private metadataSvc: MetadataService) { }
 
   ngOnInit() {
-    // this.form = this.fb.group({
-    //   name: [this.editAlbum ? this.editAlbum.name : '', [Validators.required]]
-    // });
+    this.composeArtistTemplate = this.artlitTemplateCallback.bind(this);
+
+    this.searchArtist$ = this.searchArtistTerm.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term)) // TODO
+    );
+
   }
 
   ngOnChanges() {
@@ -71,5 +86,19 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
     this.form.reset();
     this.onCanceled.emit();
   }
+
+  onArtistSearch(keyword) {
+    var _keyword = (keyword == null || keyword == '') ? null : keyword;
+    this.searchArtistTerm.next(_keyword);
+  }
+
+  onRelateArtist() {
+
+  }
+
+  artlitTemplateCallback(object: any) {
+
+  }
+
 
 }

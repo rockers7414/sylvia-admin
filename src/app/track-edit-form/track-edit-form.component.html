@@ -24,7 +24,8 @@
       (onSearchEmitter)="onSearch($event)"
       (onItemClick)="onRelateAlbum($event)"
       [composeTemplate]="composeTemplate"
-      [searchResultObserver$]="searchAlbums$"></app-live-search>
+      [searchResultObserver$]="searchAlbums$"
+      [placeholder]="liveSearchPlaceholder"></app-live-search>
     <div class="col-5" *ngIf="relateAlbum" (click)="onRemoveRelateAlbum()">
       <button type="button" class="btn btn-danger">Remove</button>
     </div>

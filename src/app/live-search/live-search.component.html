@@ -1,7 +1,7 @@
 <div class="row">
   <label class="col-2 col-form-label">Search</label>
   <div class="col-10 mb-2">
-    <input class="form-control" id="searchAlbum" type="text" placeholder="Search album..." (keyup)="onSearch($event)" (blur)="onBlur($event)" (focus)="onFocus()" />
+    <input class="form-control" id="search" type="text" placeholder="{{placeholder}}" (keyup)="onSearch($event)" (blur)="onBlur($event)" (focus)="onFocus()" />
     <div class="list-group liveSearchResult row px-3" *ngIf="templates?.length > 0 && showResultList">
       <a *ngFor="let template of templates" href="javascript:void(0)" class="list-group-item list-group-item-action searchResultItem" (click)="onClick(template)">
         <div class="d-flex w-100 justify-content-between">

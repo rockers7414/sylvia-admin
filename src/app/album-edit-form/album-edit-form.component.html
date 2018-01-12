@@ -5,8 +5,17 @@
       <input id="name" class="form-control" type="text" formControlName="name">
     </div>
     <label class="col-2 col-form-label" for="name">artist</label>
-    <div class="col-10 mb-2">
+    <div class="col-5 mb-2">
       <input id="artist" class="form-control" type="text" formControlName="artist">
+    </div>
+    <app-live-search class="col-5" *ngIf="!relateArtist"
+      (onSearchEmitter)="onArtistSearch($event)"
+      (onItemClick)="onRelateArtist($event)"
+      [composeTemplate]="composeArtistTemplate"
+      [searchResultObserver$]="searchArtist$"
+      [placeholder]="liveSearchArtistPlaceholder"></app-live-search>
+    <div class="col-5" *ngIf="relateArtist" (click)="onRemoveRelateArtist()">
+      <button type="button" class="btn btn-danger">Remove</button>
     </div>
     <!-- <label class="col-2 col-form-label" for="name">tracks</label>
     <div class="col-10">
