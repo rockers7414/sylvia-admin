@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { LiveSearchTemplate } from '../objects';
 
@@ -7,25 +7,19 @@ import { LiveSearchTemplate } from '../objects';
   templateUrl: './live-search.component.html',
   styleUrls: ['./live-search.component.css']
 })
-export class LiveSearchComponent implements OnInit {
+export class LiveSearchComponent implements OnChanges {
 
   @Output() onSearchEmitter: EventEmitter<string> = new EventEmitter();
   @Output() onItemClick: EventEmitter<any> = new EventEmitter();
-  @Input() composeTemplate: Function;
-  @Input() searchResultObserver$: Observable<any[]>;
   @Input() placeholder: string;
+  @Input() searchResult: LiveSearchTemplate[];
 
-  private templates: LiveSearchTemplate[];
   private showResultList = false;
 
-  constructor() {
-  }
+  constructor() { }
 
-  ngOnInit() {
-    this.searchResultObserver$.subscribe(result => {
-      this.templates = this.composeTemplate(result);
-      this.showResultList = true;
-    });
+  ngOnChanges() {
+    this.showResultList = this.searchResult ? true : false;
   }
 
   onSearch(event) {

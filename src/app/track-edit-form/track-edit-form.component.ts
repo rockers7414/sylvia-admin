@@ -27,7 +27,7 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   /** live search */
   private searchAlbums$: Observable<Album[]>;
   private searchTerms = new Subject<string>();
-  private composeTemplate: Function;
+  private albumLiveSearchResult;
   private liveSearchPlaceholder = "Search tracks...";
 
   private relateAlbum: Album;
@@ -36,13 +36,22 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   constructor(private metadataSvc: MetadataService) { }
 
   ngOnInit() {
-    this.composeTemplate = this.templateCallback.bind(this);
-
     this.searchAlbums$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term))
     );
+
+    this.searchAlbums$.subscribe(result => {
+      this.albumLiveSearchResult = [];
+      result.forEach(obj => {
+        var template = new LiveSearchTemplate();
+        template.obj = obj;
+        template.title = obj.name;
+        template.desc = obj.artist ? obj.artist.name : '';
+        this.albumLiveSearchResult.push(template);
+      });
+    });
   }
 
   ngOnChanges() {
@@ -132,17 +141,6 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   onRemoveRelateAlbum() {
     this.relateAlbum = null;
     this.form.controls['album'].setValue('');
-  }
-
-  templateCallback(object: any) {
-    var templateArray = [];
-    object.forEach(obj => {
-      var template = new LiveSearchTemplate();
-      template.obj = obj;
-      template.title = obj.name;
-      template.desc = obj.artist ? obj.artist.name : '';
-      templateArray.push(template);
-    });
-    return templateArray;
+    this.albumLiveSearchResult = null;
   }
 }

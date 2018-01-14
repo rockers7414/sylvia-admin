@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MetadataService } from '../services/metadata.service';
-import { Album, Track, Artist } from '../objects';
+import { Album, Track, Artist, LiveSearchTemplate } from '../objects';
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -26,23 +26,31 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
 
   private searchArtist$: Observable<Artist[]>;
   private searchArtistTerm = new Subject<string>();
-  private composeArtistTemplate: Function;
-
-  private relateArtist: Artist;
   private liveSearchArtistPlaceholder = "Search artist...";
+  private artistLiveSearchResult;
+  private relateArtist: Artist;
+
   private relateTracks: Track[];
   private liveSearchTracksPlaceholder = "Search tracks...";
 
   constructor(private metadataSvc: MetadataService) { }
 
   ngOnInit() {
-    this.composeArtistTemplate = this.artlitTemplateCallback.bind(this);
-
     this.searchArtist$ = this.searchArtistTerm.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term)) // TODO
+      switchMap((term: string) => this.metadataSvc.getArtistByKeyword(term))
     );
+
+    this.searchArtist$.subscribe(result => {
+      this.artistLiveSearchResult = [];
+      result.forEach(obj => {
+        var template = new LiveSearchTemplate();
+        template.obj = obj;
+        template.title = obj.name;
+        this.artistLiveSearchResult.push(template);
+      });
+    });
 
   }
 
@@ -92,13 +100,8 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
     this.searchArtistTerm.next(_keyword);
   }
 
-  onRelateArtist() {
-
+  onRelateArtist(templ: LiveSearchTemplate) {
+    // this.relateArtist = ""
   }
-
-  artlitTemplateCallback(object: any) {
-
-  }
-
 
 }

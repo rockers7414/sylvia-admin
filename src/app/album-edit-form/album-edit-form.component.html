@@ -11,8 +11,7 @@
     <app-live-search class="col-5" *ngIf="!relateArtist"
       (onSearchEmitter)="onArtistSearch($event)"
       (onItemClick)="onRelateArtist($event)"
-      [composeTemplate]="composeArtistTemplate"
-      [searchResultObserver$]="searchArtist$"
+      [searchResult]="artistLiveSearchResult"
       [placeholder]="liveSearchArtistPlaceholder"></app-live-search>
     <div class="col-5" *ngIf="relateArtist" (click)="onRemoveRelateArtist()">
       <button type="button" class="btn btn-danger">Remove</button>

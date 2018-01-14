@@ -1,13 +1,19 @@
 <div class="row">
   <label class="col-2 col-form-label">Search</label>
   <div class="col-10 mb-2">
-    <input class="form-control" id="search" type="text" placeholder="{{placeholder}}" (keyup)="onSearch($event)" (blur)="onBlur($event)" (focus)="onFocus()" />
-    <div class="list-group liveSearchResult row px-3" *ngIf="templates?.length > 0 && showResultList">
-      <a *ngFor="let template of templates" href="javascript:void(0)" class="list-group-item list-group-item-action searchResultItem" (click)="onClick(template)">
+    <input class="form-control" id="search" type="text" placeholder="{{placeholder}}" autocomplete="off"
+      (keyup)="onSearch($event)"
+      (blur)="onBlur($event)"
+      (focus)="onFocus()" />
+    <div class="list-group liveSearchResult row px-3" *ngIf="searchResult?.length > 0 && showResultList">
+      <a *ngFor="let result of searchResult"
+        href="javascript:void(0)"
+        class="list-group-item list-group-item-action searchResultItem"
+        (click)="onClick(result)">
         <div class="d-flex w-100 justify-content-between">
-          <div>{{ template.title }}</div>
+          <div>{{ result.title }}</div>
         </div>
-        <small *ngIf="template.desc">{{ template.desc }}</small>
+        <small *ngIf="result.desc">{{ result.desc }}</small>
       </a>
     </div>
   </div>
