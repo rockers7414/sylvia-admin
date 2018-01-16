@@ -38,7 +38,6 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.searchArtist$ = this.searchArtistTerm.pipe(
       debounceTime(300),
-      distinctUntilChanged(),
       switchMap((term: string) => this.metadataSvc.getArtistByKeyword(term))
     );
 
@@ -102,6 +101,7 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
 
   onRelateArtist(templ: LiveSearchTemplate) {
     // this.relateArtist = ""
+    // After pressing remove button(live-search), key a letter will not emit onSearchEmitter. !!!!!!!!!!!!
   }
 
 }

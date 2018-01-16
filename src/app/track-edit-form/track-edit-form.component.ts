@@ -38,7 +38,6 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.searchAlbums$ = this.searchTerms.pipe(
       debounceTime(300),
-      distinctUntilChanged(),
       switchMap((term: string) => this.metadataSvc.getAlbumByKeyword(term))
     );
 
@@ -89,8 +88,6 @@ export class TrackEditFormComponent implements OnInit, OnChanges {
 
       this.form.reset();
     });
-
-
   }
 
   onSave() {
