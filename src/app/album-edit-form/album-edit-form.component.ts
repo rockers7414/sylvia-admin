@@ -50,7 +50,6 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
         this.artistLiveSearchResult.push(template);
       });
     });
-
   }
 
   ngOnChanges() {
@@ -59,7 +58,8 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
       artist: new FormControl({
         value: this.editAlbum ? (this.editAlbum.artist ? this.editAlbum.artist.name : '') : '',
         disabled: true
-      })
+      }),
+      images: new FormControl()
     });
       // TODO => images, tracks.
 
@@ -100,8 +100,15 @@ export class AlbumEditFormComponent implements OnInit, OnChanges {
   }
 
   onRelateArtist(templ: LiveSearchTemplate) {
-    // this.relateArtist = ""
-    // After pressing remove button(live-search), key a letter will not emit onSearchEmitter. !!!!!!!!!!!!
+    this.relateArtist = <Artist>templ.obj;
+    var inputValue = templ.title;
+    this.form.controls['artist'].setValue(inputValue);
+  }
+
+  onRemoveRelateArtist() {
+    this.relateArtist = null;
+    this.form.controls['artist'].setValue('');
+    this.artistLiveSearchResult = null;
   }
 
 }

@@ -16,13 +16,14 @@
     <div class="col-5" *ngIf="relateArtist" (click)="onRemoveRelateArtist()">
       <button type="button" class="btn btn-danger">Remove</button>
     </div>
+    <label class="col-2 col-form-label" for="name">images</label>
+    <div class="col-10">
+      <input id="images" class="form-control" type="text" formControlName="images" />
+      <button type="button">Upload</button>
+    </div>
     <!-- <label class="col-2 col-form-label" for="name">tracks</label>
     <div class="col-10">
       <input id="tracks" class="form-control" type="text" formControlName="tracks">
-    </div> -->
-   <!--  <label class="col-2 col-form-label" for="name">images</label>
-    <div class="col-10">
-      <input id="images" class="form-control" type="text" formControlName="images">
     </div> -->
   </div>
 
